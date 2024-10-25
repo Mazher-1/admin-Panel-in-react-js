@@ -1,0 +1,84 @@
+.navb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  margin-right: 40px;
+  margin-left: 40px;
+
+  padding: 0.5px 4%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: sticky;
+  top: 0; /* Ensures it sticks to the top */
+}
+
+.logomain {
+  width: 140px; /* Adjust the width as needed */
+  height: auto; /* This will maintain the aspect ratio */
+}
+
+#bottone1 {
+  padding-left: 33px;
+  padding-right: 33px;
+  padding-bottom: 16px;
+  padding-top: 16px;
+  border-radius: 9px;
+  background: #475be8;
+  border: none;
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.4s;
+  color: white;
+}
+
+#bottone1:hover {
+  box-shadow: 7px 5px 56px -14px #475be8;
+}
+
+#bottone1:active {
+  transform: scale(0.97);
+  box-shadow: 7px 5px 56px -10px #475be8;
+}
+
+@media (max-width: 500px) {
+  .navb {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
+  .logomain {
+    width: 130px; /* Adjust the width as needed */
+    height: auto; /* This will maintain the aspect ratio */
+  }
+
+  #bottone1 {
+    padding-left: 26px;
+    padding-right: 26px;
+    padding-bottom: 13px;
+    padding-top: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navb {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .logomain {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* This will maintain the aspect ratio */
+  }
+
+  #bottone1 {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 12px;
+    padding-top: 12px;
+  }
+  img{
+    margin-bottom: 0px;
+  }
+}
