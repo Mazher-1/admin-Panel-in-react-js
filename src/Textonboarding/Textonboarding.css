@@ -7,17 +7,19 @@
     align-items: center;
     height: 18vh;
     text-align: center;
+    margin-top: 32px;
+    margin-bottom: 21px;
   }
   
   .centered-content .main-headi {
-    font-size: 2rem;
+    font-size: 1.9rem;
     margin-bottom: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     font-family: "Poppins", serif;
   }
   
   .centered-content .sideheading {
-    font-size: 1rem;
+    font-size: 0.8rem;
     max-width: 600px;
     font-family: "Poppins", serif;
   }
