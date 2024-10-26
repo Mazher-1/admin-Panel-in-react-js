@@ -7,22 +7,22 @@
   margin-left: 40px;
 
   padding: 0.5px 4%;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  position: sticky;
+  
+  
+ 
   top: 0; /* Ensures it sticks to the top */
 }
 
 .logomain {
-  width: 140px; /* Adjust the width as needed */
+  width: 120px; /* Adjust the width as needed */
   height: auto; /* This will maintain the aspect ratio */
 }
 
 #bottone1 {
-  padding-left: 33px;
-  padding-right: 33px;
-  padding-bottom: 16px;
-  padding-top: 16px;
+  padding-left: 23px;
+  padding-right: 23px;
+  padding-bottom: 14px;
+  padding-top: 14px;
   border-radius: 9px;
   background: #475be8;
   border: none;
@@ -31,6 +31,7 @@
   cursor: pointer;
   transition: 0.4s;
   color: white;
+  font-size: 12px;
 }
 
 #bottone1:hover {

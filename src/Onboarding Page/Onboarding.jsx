@@ -1,3 +1,5 @@
+// Onboarding.js
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "../Navbarforonboarding/Nav";
@@ -30,9 +32,9 @@ const questions = [
     showCards: false,
   },
   {
-    heading: "What is your target savings amount for this month?",
+    heading: "How much are your expenses this month?",
     paragraph:
-      "With an understanding of income and expenses, this question encourages users to set specific savings targets, reinforcing positive financial behavior.",
+      "Understanding your monthly expenses helps to identify areas where you can save, reinforcing positive financial habits.",
     showCards: false,
   },
   {
@@ -46,23 +48,26 @@ function Onboarding({ completeOnboarding }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isFading, setIsFading] = useState(false);
   const navigate = useNavigate();
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [income, setIncome] = useState("");
-  const [expenseCategories, setExpenseCategories] = useState("");
-  const [targetSavings, setTargetSavings] = useState("");
+
+  // State to collect user data
+  const [userData, setUserData] = useState({
+    selectedGoal: "",
+    income: "",
+    expenseCategories: "",
+    monthlyExpenses: "",
+    name: "",
+    email: "",
+  });
 
   const handleNext = () => {
     setIsFading(true);
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
-        setSelectedCard(null);
       } else {
-        // Complete onboarding and redirect to dashboard
+        // Complete onboarding and redirect to dashboard with data
         completeOnboarding();
-        navigate("/dashboard"); // Make sure you navigate after completing
+        navigate("/dashboard", { state: userData });
       }
       setIsFading(false);
     }, 300);
@@ -79,24 +84,24 @@ function Onboarding({ completeOnboarding }) {
         {questions[currentQuestion].showCards && (
           <div className="box">
             <div
-              className={`leftbox ${selectedCard === "save" ? "selected" : ""}`}
-              onClick={() => setSelectedCard("save")}
+              className={`leftbox ${userData.selectedGoal === "save" ? "selected" : ""}`}
+              onClick={() => setUserData({ ...userData, selectedGoal: "save" })}
             >
               <img src={icon1} alt="Save More Money Icon" />
               <h1>Save More Money</h1>
               <p>Set aside a portion of your income each month to build your savings for emergencies, investments, or future goals.</p>
             </div>
             <div
-              className={`middlebox ${selectedCard === "track" ? "selected" : ""}`}
-              onClick={() => setSelectedCard("track")}
+              className={`middlebox ${userData.selectedGoal === "track" ? "selected" : ""}`}
+              onClick={() => setUserData({ ...userData, selectedGoal: "track" })}
             >
               <img src={icon2} alt="Track Spending Icon" />
               <h1>Track Spending</h1>
               <p>Monitor your daily expenses to understand your spending habits and identify areas to cut back.</p>
             </div>
             <div
-              className={`rightbox ${selectedCard === "others" ? "selected" : ""}`}
-              onClick={() => setSelectedCard("others")}
+              className={`rightbox ${userData.selectedGoal === "others" ? "selected" : ""}`}
+              onClick={() => setUserData({ ...userData, selectedGoal: "others" })}
             >
               <img src={icon3} alt="Other Financial Goals Icon" />
               <h1>Others</h1>
@@ -109,26 +114,35 @@ function Onboarding({ completeOnboarding }) {
             <input
               type="number"
               placeholder="Enter your monthly income"
-              onChange={(e) => setIncome(e.target.value)}
+              onChange={(e) => setUserData({ ...userData, income: e.target.value })}
             />
           </div>
         )}
         {currentQuestion === 2 && (
           <div className="box">
-            <div className={`leftbox ${selectedCard === "save" ? "selected" : ""}`} onClick={() => setSelectedCard("save")}>
-              <img src={icon4} alt="Save More Money Icon" />
+            <div
+              className={`leftbox ${userData.expenseCategories === "rent" ? "selected" : ""}`}
+              onClick={() => setUserData({ ...userData, expenseCategories: "rent" })}
+            >
+              <img src={icon4} alt="Rent/Mortgage Icon" />
               <h1>Rent/Mortgage</h1>
               <p>Rent or mortgage payments are typically the largest monthly expense for most individuals and families.</p>
             </div>
-            <div className={`middlebox ${selectedCard === "track" ? "selected" : ""}`} onClick={() => setSelectedCard("track")}>
-              <img src={icon5} alt="Track Spending Icon" />
+            <div
+              className={`middlebox ${userData.expenseCategories === "utilities" ? "selected" : ""}`}
+              onClick={() => setUserData({ ...userData, expenseCategories: "utilities" })}
+            >
+              <img src={icon5} alt="Utilities Icon" />
               <h1>Utilities</h1>
-              <p>Utilities are essential services that keep your household running smoothly, including electricity, heating, and waste management.</p>
+              <p>Utilities include essential services like electricity, heating, and waste management.</p>
             </div>
-            <div className={`rightbox ${selectedCard === "others" ? "selected" : ""}`} onClick={() => setSelectedCard("others")}>
+            <div
+              className={`rightbox ${userData.expenseCategories === "others" ? "selected" : ""}`}
+              onClick={() => setUserData({ ...userData, expenseCategories: "others" })}
+            >
               <img src={icon6} alt="Other Financial Goals Icon" />
               <h1>Others</h1>
-              <p>Have a different goal in mind? Share your specific financial objectives or challenges.</p>
+              <p>Have other expenses? Share them here.</p>
             </div>
           </div>
         )}
@@ -136,39 +150,37 @@ function Onboarding({ completeOnboarding }) {
           <div className="input-field">
             <input
               type="number"
-              placeholder="Enter your target savings amount"
-              onChange={(e) => setTargetSavings(e.target.value)}
+              placeholder="Enter your Expenses for this month"
+              onChange={(e) => setUserData({ ...userData, monthlyExpenses: e.target.value })}
             />
           </div>
         )}
         {currentQuestion === 4 && (
           <section className="section_form">
-            <form id="consultation-form" className="feed-form" action="#">
+            <form className="feed-form" action="#">
               <input
                 required
                 placeholder="Name"
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={userData.name}
+                onChange={(e) => setUserData({ ...userData, name: e.target.value })}
               />
-              <input
-                required
-                placeholder="Phone number"
-                type="text"
-              />
+              <input required placeholder="Phone number" type="text" />
               <input
                 required
                 placeholder="E-mail"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={userData.email}
+                onChange={(e) => setUserData({ ...userData, email: e.target.value })}
               />
             </form>
           </section>
         )}
       </div>
       <div className="next-btn-div">
-        <button className="next-btn" onClick={handleNext}>Next</button>
+        <button className="next-btn" onClick={handleNext}>
+          Next
+        </button>
       </div>
     </div>
   );
