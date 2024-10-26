@@ -46,26 +46,26 @@ function Onboarding({ completeOnboarding }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isFading, setIsFading] = useState(false);
   const navigate = useNavigate();
-  const [selectedCard, setSelectedCard] = useState(null); // State for selected card
+  const [selectedCard, setSelectedCard] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [income, setIncome] = useState(""); // Added state for income
-  const [expenseCategories, setExpenseCategories] = useState(""); // Added state for expense categories
-  const [targetSavings, setTargetSavings] = useState(""); // Added state for target savings
+  const [income, setIncome] = useState("");
+  const [expenseCategories, setExpenseCategories] = useState("");
+  const [targetSavings, setTargetSavings] = useState("");
 
   const handleNext = () => {
     setIsFading(true);
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
-        // Move to the next question
         setCurrentQuestion(currentQuestion + 1);
-        setSelectedCard(null); // Reset selected card for next question
+        setSelectedCard(null);
       } else {
+        // Complete onboarding and redirect to dashboard
         completeOnboarding();
-        navigate("/dashboard");
+        navigate("/dashboard"); // Make sure you navigate after completing
       }
       setIsFading(false);
-    }, 300); // Match this with your CSS fade duration
+    }, 300);
   };
 
   return (
@@ -80,44 +80,30 @@ function Onboarding({ completeOnboarding }) {
           <div className="box">
             <div
               className={`leftbox ${selectedCard === "save" ? "selected" : ""}`}
-              onClick={() => setSelectedCard("save")} // Set selected card
+              onClick={() => setSelectedCard("save")}
             >
               <img src={icon1} alt="Save More Money Icon" />
               <h1>Save More Money</h1>
-              <p>
-                Set aside a portion of your income each month to build your
-                savings for emergencies, investments, or future goals.
-              </p>
+              <p>Set aside a portion of your income each month to build your savings for emergencies, investments, or future goals.</p>
             </div>
             <div
-              className={`middlebox ${
-                selectedCard === "track" ? "selected" : ""
-              }`}
-              onClick={() => setSelectedCard("track")} // Set selected card
+              className={`middlebox ${selectedCard === "track" ? "selected" : ""}`}
+              onClick={() => setSelectedCard("track")}
             >
               <img src={icon2} alt="Track Spending Icon" />
               <h1>Track Spending</h1>
-              <p>
-                Monitor your daily expenses to understand your spending habits
-                and identify areas to cut back.
-              </p>
+              <p>Monitor your daily expenses to understand your spending habits and identify areas to cut back.</p>
             </div>
             <div
-              className={`rightbox ${
-                selectedCard === "others" ? "selected" : ""
-              }`}
-              onClick={() => setSelectedCard("others")} // Set selected card
+              className={`rightbox ${selectedCard === "others" ? "selected" : ""}`}
+              onClick={() => setSelectedCard("others")}
             >
               <img src={icon3} alt="Other Financial Goals Icon" />
               <h1>Others</h1>
-              <p>
-                Have a different goal in mind? Share your specific financial
-                objectives or challenges.
-              </p>
+              <p>Have a different goal in mind? Share your specific financial objectives or challenges.</p>
             </div>
           </div>
         )}
-        {/* Render input fields for the last questions */}
         {currentQuestion === 1 && (
           <div className="input-field">
             <input
@@ -129,42 +115,20 @@ function Onboarding({ completeOnboarding }) {
         )}
         {currentQuestion === 2 && (
           <div className="box">
-            <div
-              className={`leftbox ${selectedCard === "save" ? "selected" : ""}`}
-              onClick={() => setSelectedCard("save")} // Set selected card
-            >
+            <div className={`leftbox ${selectedCard === "save" ? "selected" : ""}`} onClick={() => setSelectedCard("save")}>
               <img src={icon4} alt="Save More Money Icon" />
               <h1>Rent/Mortgage</h1>
-              <p>
-                Rent or mortgage payments are typically the largest monthly
-                expense for most individuals and families.
-              </p>
+              <p>Rent or mortgage payments are typically the largest monthly expense for most individuals and families.</p>
             </div>
-            <div
-              className={`middlebox ${
-                selectedCard === "track" ? "selected" : ""
-              }`}
-              onClick={() => setSelectedCard("track")} // Set selected card
-            >
+            <div className={`middlebox ${selectedCard === "track" ? "selected" : ""}`} onClick={() => setSelectedCard("track")}>
               <img src={icon5} alt="Track Spending Icon" />
               <h1>Utilities</h1>
-              <p>
-                Utilities are essential services that keep your household
-                running smoothly, including electricity, heating, and waste management.
-              </p>
+              <p>Utilities are essential services that keep your household running smoothly, including electricity, heating, and waste management.</p>
             </div>
-            <div
-              className={`rightbox ${
-                selectedCard === "others" ? "selected" : ""
-              }`}
-              onClick={() => setSelectedCard("others")} // Set selected card
-            >
+            <div className={`rightbox ${selectedCard === "others" ? "selected" : ""}`} onClick={() => setSelectedCard("others")}>
               <img src={icon6} alt="Other Financial Goals Icon" />
               <h1>Others</h1>
-              <p>
-                Have a different goal in mind? Share your specific financial
-                objectives or challenges.
-              </p>
+              <p>Have a different goal in mind? Share your specific financial objectives or challenges.</p>
             </div>
           </div>
         )}
@@ -204,9 +168,7 @@ function Onboarding({ completeOnboarding }) {
         )}
       </div>
       <div className="next-btn-div">
-        <button className="next-btn" onClick={handleNext}>
-          Next
-        </button>
+        <button className="next-btn" onClick={handleNext}>Next</button>
       </div>
     </div>
   );

@@ -11,34 +11,31 @@ import Onboarding from "./Onboarding Page/Onboarding";
 import FinancialHistory from "./components/FinancialHistory/FinancialHistory";
 
 function App() {
-  const { theme, toggleTheme } = useContext(ThemeContext);
-  const [onboardingComplete, setOnboardingComplete] = useState(() => {
-    // Check local storage to determine if onboarding is complete
-    const storedValue = localStorage.getItem("onboardingComplete");
-    console.log("Stored onboarding value:", storedValue); // Debugging line
-    return storedValue === "true"; // Initialize state based on local storage
-  });
+  const [onboardingComplete, setOnboardingComplete] = useState(false);
 
-  // Effect to handle dark mode
   useEffect(() => {
-    if (theme === DARK_THEME) {
-      document.body.classList.add("dark-mode");
+    const storedValue = localStorage.getItem("onboardingComplete");
+    console.log("Stored onboarding value:", storedValue);
+
+    // Enhanced condition to set onboardingComplete
+    if (storedValue === null) {
+      // Default to false if key is not found
+      setOnboardingComplete(false);
     } else {
-      document.body.classList.remove("dark-mode");
+      // Set onboardingComplete based on stored value
+      setOnboardingComplete(storedValue === "true");
     }
-  }, [theme]);
+  }, []);
 
-  // Function to mark onboarding as complete and save to local storage
+  // Function to mark onboarding as complete
   const completeOnboarding = () => {
-    setOnboardingComplete(true);
     localStorage.setItem("onboardingComplete", "true");
-    console.log("Onboarding completed and saved to local storage"); // Confirm function call
+    setOnboardingComplete(true);
   };
-  
-
   return (
     <Router>
       <Routes>
+        {/* If onboarding is not complete, show the onboarding page */}
         {!onboardingComplete ? (
           <Route path="/" element={<Onboarding completeOnboarding={completeOnboarding} />} />
         ) : (
@@ -48,14 +45,11 @@ function App() {
               <Route path="/dashboard/financial-history" element={<FinancialHistory />} />
               <Route path="*" element={<PageNotFound />} />
             </Route>
+            {/* Redirect to dashboard after onboarding completion */}
             <Route path="/" element={<Navigate to="/dashboard" />} />
           </>
         )}
       </Routes>
-
-      <button type="button" className="theme-toggle-btn" onClick={toggleTheme}>
-        <img className="theme-icon" src={theme === LIGHT_THEME ? SunIcon : MoonIcon} alt="Toggle theme" />
-      </button>
     </Router>
   );
 }
