@@ -1,7 +1,10 @@
+// AreaCards.js
+
+import React from "react";
 import AreaCard from "./AreaCard";
 import "./AreaCards.scss";
 
-const AreaCards = () => {
+const AreaCards = ({ income = 0, expenses = 0, totalBalance = 0 }) => {
   return (
     <section className="content-area-cards">
       <AreaCard
@@ -9,7 +12,7 @@ const AreaCards = () => {
         percentFillValue={80}
         cardInfo={{
           title: "Total Balance",
-          value: "$20.4K",
+          value: `$${totalBalance.toLocaleString()}`,
           text: "Current balance (Income - Expenses).",
         }}
       />
@@ -18,7 +21,7 @@ const AreaCards = () => {
         percentFillValue={50}
         cardInfo={{
           title: "Income",
-          value: "$8.2K",
+          value: `$${income.toLocaleString()}`,
           text: "Total income for the current period.",
         }}
       />
@@ -27,11 +30,10 @@ const AreaCards = () => {
         percentFillValue={40}
         cardInfo={{
           title: "Expenses",
-          value: "$18.2K",
+          value: `$${expenses.toLocaleString()}`,
           text: "Total expenses for the current period.",
         }}
       />
-      
     </section>
   );
 };

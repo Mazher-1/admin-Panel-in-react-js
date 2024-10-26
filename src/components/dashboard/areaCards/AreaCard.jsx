@@ -1,23 +1,19 @@
 import PropTypes from "prop-types";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
 
 const AreaCard = ({ colors, percentFillValue, cardInfo }) => {
-  const filledValue = (percentFillValue / 100) * 360; // 360 degress for a full circle
+  // Calculate angles for the chart
+  const filledValue = (percentFillValue / 100) * 360; // Full circle is 360 degrees
   const remainedValue = 360 - filledValue;
 
+  // Data for the pie chart
   const data = [
     { name: "Remained", value: remainedValue },
-    { name: "Achieved Sales", value: filledValue },
+    { name: "Achieved", value: filledValue },
   ];
 
-  const renderTooltipContent = (value) => {
-    return `${(value / 360) * 100} %`;
-  };
+  // Tooltip content formatter
+  const renderTooltipContent = (value) => `${((value / 360) * 100).toFixed(1)} %`;
 
   return (
     <div className="area-card">
@@ -33,31 +29,31 @@ const AreaCard = ({ colors, percentFillValue, cardInfo }) => {
             cx={50}
             cy={45}
             innerRadius={20}
-            fill="#e4e8ef"
-            paddingAngle={0}
+            outerRadius={45}
             dataKey="value"
-            startAngle={-270}
-            endAngle={150}
+            startAngle={90}  // Start angle at 90 degrees (top of the circle)
+            endAngle={450}   // End angle to complete 360 degrees from the start
             stroke="none"
           >
             {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={colors[index % colors.length]}
-              />
+              <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Pie>
-          <Tooltip formatter={renderTooltipContent} />
+          <Tooltip formatter={(value) => renderTooltipContent(value)} />
         </PieChart>
       </div>
     </div>
   );
 };
 
-export default AreaCard;
-
 AreaCard.propTypes = {
   colors: PropTypes.array.isRequired,
   percentFillValue: PropTypes.number.isRequired,
-  cardInfo: PropTypes.object.isRequired,
+  cardInfo: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    text: PropTypes.string,
+  }).isRequired,
 };
+
+export default AreaCard;
